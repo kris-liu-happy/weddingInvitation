@@ -1,0 +1,34 @@
+@import "~taro-ui/dist/style/components/button.scss";
+
+.xl_album_template {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.xl_album_template_1, .xl_album_template_2 {
+  margin-top: 2rem;
+}
+
+.xl_album_size {
+  padding: 3vw 0;
+  font-weight: bold;
+  color: #368de8e0;
+  font-size: 1.3rem;
+}
+
+.xl_album_Img {
+  width: 90vw;
+  height:30vh;
+  border: 0.2rem solid #03A9F4;
+  border-radius: 1rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem #00BCD4
+}
+
+.xl_album_sigleImg {
+  width: 90vw;
+  height:30vh;
+  border: 0.2rem solid #03A9F4;
+  border-radius: 1rem;
+  box-shadow: 0.1rem 0.1rem 0.1rem #00BCD4
+}

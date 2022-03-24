@@ -1,0 +1,26 @@
+@import "~taro-ui/dist/style/components/fab.scss";
+
+@import "~taro-ui/dist/style/components/icon.scss";
+
+.xl_album_detail_album {
+  width: 95vw;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+}
+
+.xl_album_detail_sigleImg {
+  width: 45vw;
+  margin: 2vw 1.25vw;
+  border-radius: 1rem;
+}
+
+
+.xl-album_detail-preview {
+  position: fixed;
+  bottom: 20vw;
+  right: 8vw;
+  display: flex;
+  flex-direction: column;
+}

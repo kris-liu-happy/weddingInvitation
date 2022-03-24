@@ -1,0 +1,40 @@
+@import "~taro-ui/dist/style/components/button.scss";
+@import "~taro-ui/dist/style/components/activity-indicator.scss";
+@import '~taro-ui/dist/style/components/loading.scss';
+
+
+.xl-login-btn {
+  width: 80vw;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.xl-login-invitation {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-top: 10vh;
+  text-align: center;
+  color: red;
+}
+
+
+.xl-login-context {
+  margin: 10vh 0;
+  text-align: center;
+}
+
+.xl-login-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+}
+
+.xl-login-background-img {
+  height: 100vh;
+  width: 100vw;
+}
