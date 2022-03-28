@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Swiper, SwiperItem, Image, Button } from '@tarojs/components'
-import './index.scss'
-
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
-
 import { MyMusic } from '../../utils/context'
 
 import XlVedio from '../../components/XlVudio/vudio.jsx'
@@ -13,32 +10,45 @@ import XlAtfab from '../../components/XlAtfab/index.jsx'
 
 import XlImage from '../../components/XlImage/index.jsx'
 
+import XlloadingCurtain from '../../components/XlloadingCurtain'
+
+import { setStorage } from '../../utils'
+
+import xlRequest from '../../utils/request'
+
+import './index.scss'
+
 const xlHomeBottom = require('../../image/xl-home-bottom.png')
 
 const inviteTips = require('../../image/xl-home-invite-tips.png')
 
 const inviteLetter = require('../../image/xl-home-invite-letter.png')
 
-const invite = {
-  groomName: '刘强',
-  brideName: '徐琴',
-  startTime: '2022/6/4',
-  address: '华阳街道府河路一段208号（花府宴·宴会厅A厅）',
-}
 
 export default class Home extends Component {
   static contextType = MyMusic;
   constructor() {
     super(...arguments)
     this.state = {
-      swiperImg: [
-        'https://686c-hl-3gzlig2n8cebc09a-1300238365.tcb.qcloud.la/login/2.jpg?sign=4da1d1a7025cfda1be862d9634391a54&t=1646809888',
-        'https://686c-hl-3gzlig2n8cebc09a-1300238365.tcb.qcloud.la/login/3.jpg?sign=4da1d1a7025cfda1be862d9634391a54&t=1646809888',
-        'https://686c-hl-3gzlig2n8cebc09a-1300238365.tcb.qcloud.la/login/4.jpg?sign=4da1d1a7025cfda1be862d9634391a54&t=1646809888',
-        'https://686c-hl-3gzlig2n8cebc09a-1300238365.tcb.qcloud.la/login/6.jpg?sign=4da1d1a7025cfda1be862d9634391a54&t=1646809888',
-      ],
-      isOpenedModal: false
+      swiperImg: [],
+      isOpenedModal: false,
+      inviteInformation: {},
+      isloadingPage: true,
     }
+  }
+
+  componentDidMount() {
+
+    const requests = [xlRequest('photo', { func: 'getYearPhoto', data: { year: '2022' } }), xlRequest('information')]
+
+    Promise.all(requests).then(res => {
+      setStorage('information', res[1])
+      this.setState({
+        swiperImg: res[0],
+        inviteInformation: res[1],
+        isloadingPage: false
+      })
+    })
   }
 
   gotoPrize() {
@@ -60,7 +70,7 @@ export default class Home extends Component {
   }
 
   render () {
-    const { isOpenedModal, swiperImg} = this.state
+    const { isOpenedModal, swiperImg, isloadingPage, inviteInformation: invite} = this.state
 
     return (
       <View>
@@ -76,7 +86,7 @@ export default class Home extends Component {
               swiperImg.map(item => {
                 return(
                   <SwiperItem>
-                      <XlImage imageClass={'xl-home-swiperitem-image'} isLazyLoading mode={'scaleToFill'} src={item}></XlImage>
+                      <XlImage imageClass={'xl-home-swiperitem-image'} isLazyLoading mode={'scaleToFill'} src={item.src}></XlImage>
                   </SwiperItem>
                 )
               })
@@ -89,8 +99,8 @@ export default class Home extends Component {
                 <View className='invite-groom'>Mr.{invite.groomName}</View>
                 <View className='invite-bride'>Miss.{invite.brideName}</View>
             </View>
-            <View className='invite-date'>{invite.startTime}</View>
-            <View className='invite-address'>{invite.address}</View>
+            <View className='invite-date'>{invite.dinnerTime}</View>
+            <View className='invite-address'>{invite.dinnerAddress}</View>
             <View className='invite-address-tips'>
                 诚/挚/邀/请/您/参/加/我/们/的/婚/礼
             </View>
@@ -115,13 +125,15 @@ export default class Home extends Component {
             <View className="xl-home-prize-rules">
                 6月1号随机在祝福评论里抽取5位幸运伙伴（领取大奖哦）
             </View>
-            <View className="xl-home-prize-to">快起祝福区里留言吧!!!</View>
+            <View className="xl-home-prize-to">快去祝福区里留言吧!!!</View>
             <View className="xl-home-prize-to">
                 是否前往领奖台？
             </View>
           </AtModalContent>
           <AtModalAction> <Button onClick={this.colseModal.bind(this)}>否</Button> <Button onClick={this.handleConfirm.bind(this)}>是</Button> </AtModalAction>
         </AtModal>
+
+        <XlloadingCurtain isOpened={isloadingPage} />
       </View>
     )
   }

@@ -14,15 +14,9 @@
 .xl-login-invitation {
   font-size: 2rem;
   font-weight: bold;
-  margin-top: 10vh;
+  margin-top: 19vh;
   text-align: center;
-  color: red;
-}
-
-
-.xl-login-context {
-  margin: 10vh 0;
-  text-align: center;
+  color: #ff4c91;
 }
 
 .xl-login-content {
@@ -34,7 +28,27 @@
   height: 100vh;
 }
 
+.xl-login-context-love{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.xl-login-context-love-size {
+  color: #ff8300a1;
+  margin: 5vw 0;
+  width: 100vw;
+  text-align: center;
+}
+
 .xl-login-background-img {
   height: 100vh;
   width: 100vw;
+}
+
+
+.at-button--primary {
+  color: #FFF;
+  border: 1PX solid #ef749e;
+  background: #ef749e;
 }

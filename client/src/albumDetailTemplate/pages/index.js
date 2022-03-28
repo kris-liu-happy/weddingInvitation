@@ -19,7 +19,7 @@ export default class albumDetailTemplate extends Component {
 
   componentDidMount () {
     const { id, title } = JSON.parse(wx.getStorageSync('currentAlbum'))
-    wx.setNavigationBarTitle({title: `${id}-${title}`})
+    wx.setNavigationBarTitle({title: `${id}·${title}`})
     xlRequest('photo', { func: 'getYearPhoto', data: { year: id } }).then(res => {
       this.setState({
         currentAlbumList: res,

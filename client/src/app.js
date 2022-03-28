@@ -29,7 +29,7 @@ class App extends Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate() {
     const isMusic = Taro.getStorageSync('isMusic')
     const currentPagesUrl = getCurrentPages()
     const { innerAudioContext } = this.state
@@ -41,11 +41,6 @@ class App extends Component {
   componentDidShow () {
     const { innerAudioContext } = this.state
     if(innerAudioContext) innerAudioContext.play()
-  }
-
-  componentDidHide () {
-    // const { innerAudioContext } = this.state
-    // if(innerAudioContext) innerAudioContext.pause()
   }
 
   componentDidCatchError () {}

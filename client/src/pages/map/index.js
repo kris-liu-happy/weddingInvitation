@@ -5,6 +5,9 @@ import Taro from '@tarojs/taro'
 
 import XlAtfab from '../../components/XlAtfab/index.jsx'
 
+const callHe = require('../../image/xl-call-he.png')
+const callShe = require('../../image/xl-call-she.png')
+
 
 export default class Login extends Component {
 
@@ -35,7 +38,44 @@ export default class Login extends Component {
           iconPath: 'https://forguo-1302175274.cos.ap-shanghai.myqcloud.com/wedding/assets/img/icon-nav.png'
         }
       ],
+      brideMobile: '',
+      groomMobile: '',
     }
+  }
+
+  componentDidMount() {
+    const {latitude, longitude, dinnerAddress, bridePhone, groomPhone} = Taro.getStorageSync('information')
+
+    const markers = [
+        {
+          longitude,
+          latitude,
+          id: 0,
+          width: 28,
+          height: 28,
+          callout: {
+            content: dinnerAddress,
+            color: '#fff',
+            bgColor: '#ff4c91',
+            fontSize: 14,
+            textAlign: 'center',
+            padding: 6,
+            borderRadius: 6,
+            display: 'ALWAYS',
+          },
+          iconPath: 'https://forguo-1302175274.cos.ap-shanghai.myqcloud.com/wedding/assets/img/icon-nav.png'
+        }
+    ]
+
+    this.setState({
+      markers,
+      restaurantLat: {
+        longitude,
+        latitude,
+      },
+      brideMobile: bridePhone,
+      groomMobile: groomPhone,
+    })
   }
 
   gotoAddress() {
@@ -57,10 +97,17 @@ export default class Login extends Component {
      })
   }
 
+  // 电话联系新娘、新郎
+  handlePhoneCall = (phone) => {
+    Taro.makePhoneCall({
+        phoneNumber: phone
+    })
+  };
+
   render () {
     const { markers, restaurantLat: {
       longitude, latitude
-    }} = this.state
+    }, brideMobile, groomMobile } = this.state
     return (
       <View>
         <View className='xl-map-atfab'>
@@ -69,6 +116,19 @@ export default class Login extends Component {
             name='导航'
             icon='map-pin'
             fabClick={this.gotoAddress.bind(this)} />
+        </View>
+
+        <View className='xl-location__tool'>
+            <View className='xl-location__tool-btn'>
+                <View className='xl-location__tool-call' onClick={this.handlePhoneCall.bind(this, groomMobile)}>
+                    <Image src={callHe} className='xl-location__tool-call-img' />
+                    <Text className='xl-location__tool-call-txt'>呼叫新郎</Text>
+                </View>
+                <View className='xl-location__tool-call' onClick={this.handlePhoneCall.bind(this, brideMobile)}>
+                    <Image src={callShe} className='xl-location__tool-call-img' />
+                    <Text className='xl-location__tool-call-txt'>呼叫新娘</Text>
+                </View>
+            </View>
         </View>
 
          <Map className='xl-map' markers={markers} longitude={longitude} latitude={latitude} />
