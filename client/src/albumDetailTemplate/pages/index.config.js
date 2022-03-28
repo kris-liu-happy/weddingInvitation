@@ -1,3 +1,3 @@
-export default {
-  navigationBarTitleText: '西式相册',
-}
+// export default {
+//   navigationBarTitleText: '甜蜜相册',
+// }

@@ -1,55 +1,36 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View, Map, Text, Swiper, SwiperItem, Image, Button } from '@tarojs/components'
+import { View, Swiper, SwiperItem, Image, Button } from '@tarojs/components'
 import './index.scss'
 
-import { AtFab, AtIcon, AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
 
 import { MyMusic } from '../../utils/context'
 
-import VedioSwitch from '../../components/vudio/vudio.jsx'
+import XlVedio from '../../components/XlVudio/vudio.jsx'
 
-const informations = [
-  {
-    label: '公历:',
-    value: '2022年6月4日'
-  },
-  {
-    label: '农历:',
-    value: '2022年5月初6'
-  },
-  {
-    label: '新郎电话:',
-    value: '13888888888'
-  },
-  {
-    label: '新娘电话:',
-    value: '13888888888'
-  },
-  {
-    label: '宴会地址:',
-    value: '华阳街道府河路一段208号（花府宴·宴会厅A厅）'
-  },
-]
+import XlAtfab from '../../components/XlAtfab/index.jsx'
+
+import XlImage from '../../components/XlImage/index.jsx'
+
+const xlHomeBottom = require('../../image/xl-home-bottom.png')
+
+const inviteTips = require('../../image/xl-home-invite-tips.png')
+
+const inviteLetter = require('../../image/xl-home-invite-letter.png')
+
+const invite = {
+  groomName: '刘强',
+  brideName: '徐琴',
+  startTime: '2022/6/4',
+  address: '华阳街道府河路一段208号（花府宴·宴会厅A厅）',
+}
 
 export default class Home extends Component {
   static contextType = MyMusic;
   constructor() {
     super(...arguments)
     this.state = {
-      restaurantLat: {
-        longitude: '104.056605',
-        latitude: '30.497768',
-      },
-      markers: [
-        {
-          longitude: '104.056605',
-          latitude: '30.497768',
-          id: 0,
-          width: 34,
-          height: 49
-        }
-      ],
       swiperImg: [
         'https://686c-hl-3gzlig2n8cebc09a-1300238365.tcb.qcloud.la/login/2.jpg?sign=4da1d1a7025cfda1be862d9634391a54&t=1646809888',
         'https://686c-hl-3gzlig2n8cebc09a-1300238365.tcb.qcloud.la/login/3.jpg?sign=4da1d1a7025cfda1be862d9634391a54&t=1646809888',
@@ -58,25 +39,6 @@ export default class Home extends Component {
       ],
       isOpenedModal: false
     }
-  }
-
-  gotoTemplate() {
-    const { restaurantLat: {
-      longitude, latitude
-    } } = this.state
-
-    Taro.getLocation({
-      type: 'gcj02', //返回可以用于 Taro.openLocation的经纬度
-      success: function (res) {
-        Taro.openLocation({
-          latitude: +latitude,
-          longitude: +longitude,
-          name: '花府宴·宴会厅',
-          address: '华阳街道府河路一段208号',
-          scale: 18
-        })
-      }
-     })
   }
 
   gotoPrize() {
@@ -98,9 +60,7 @@ export default class Home extends Component {
   }
 
   render () {
-    const { markers, isOpenedModal, restaurantLat: {
-      longitude, latitude
-    } , swiperImg} = this.state
+    const { isOpenedModal, swiperImg} = this.state
 
     return (
       <View>
@@ -116,45 +76,38 @@ export default class Home extends Component {
               swiperImg.map(item => {
                 return(
                   <SwiperItem>
-                      <Image className='xl-home-swiperitem-image' lazy-load mode='scaleToFill' src={item}></Image>
+                      <XlImage imageClass={'xl-home-swiperitem-image'} isLazyLoading mode={'scaleToFill'} src={item}></XlImage>
                   </SwiperItem>
                 )
               })
             }
         </Swiper>
 
-        <View className='xl-home-information'>
-            {
-              informations.map(item => {
-                return(
-                  <View className='xl-home-information-context'>
-                    <View className='xl-home-information-context-label'>
-                        {item.label}
-                    </View>
-                    <View className='xl-home-information-context-value'>
-                        {item.value}
-                    </View>
-                  </View>
-                )
-              })
-            }
+        <View className='invite-info'>
+            <Image className='invite-letter' src={inviteLetter} />
+            <View className='invite-couple'>
+                <View className='invite-groom'>Mr.{invite.groomName}</View>
+                <View className='invite-bride'>Miss.{invite.brideName}</View>
+            </View>
+            <View className='invite-date'>{invite.startTime}</View>
+            <View className='invite-address'>{invite.address}</View>
+            <View className='invite-address-tips'>
+                诚/挚/邀/请/您/参/加/我/们/的/婚/礼
+            </View>
+            <Image src={inviteTips} className='invite-tips' />
         </View>
+
+        <XlImage imageClass={'xl-home-bottom-img' } mode={"widthFix"} src={xlHomeBottom}></XlImage>
 
 
         <View className='xl-home-atfab'>
-          <VedioSwitch innerAudioContext={this.context} />
-          <AtFab className='xl-home-atfab-navigation xl-home-atfab-context' onClick={this.gotoTemplate.bind(this)}>
-            <AtIcon value='map-pin' size='20' color='#fff'></AtIcon>
-            导航
-          </AtFab>
-          <AtFab className='xl-home-atfab-navigation xl-home-atfab-context' onClick={this.gotoPrize.bind(this)}>
-            <AtIcon value='map-pin' size='20' color='#fff'></AtIcon>
-            奖品
-          </AtFab>
+          <XlVedio innerAudioContext={this.context} />
+          <XlAtfab
+            classNames='xl-home-atfab-navigation xl-home-atfab-context'
+            name='奖品'
+            icon='sketch'
+            fabClick={this.gotoPrize.bind(this)} />
         </View>
-
-        <Map className='xl-home-map' markers={markers} longitude={longitude} latitude={latitude} />
-
 
         <AtModal isOpened={isOpenedModal}>
           <AtModalHeader>游戏规则</AtModalHeader>

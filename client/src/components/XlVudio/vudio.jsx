@@ -2,22 +2,24 @@ import React, { useState } from 'react'
 
 import { AtFab, AtIcon } from 'taro-ui'
 
+import XlAtfab from '../XlAtfab'
+
 const VedioSwitch = (props) => {
   const [isOpenMusic, setIsOpenMusic] = useState(false)
 
   const { innerAudioContext } = props
 
   const setOpenMusic = () => {
-    console.log(isOpenMusic, innerAudioContext)
     !isOpenMusic ? innerAudioContext.pause() : innerAudioContext.play()
     setIsOpenMusic(!isOpenMusic)
   }
 
   return (
-    <AtFab className='xl-home-atfab-vudio xl-home-atfab-context' onClick={() => {setOpenMusic()}}>
-      <AtIcon value={!isOpenMusic ? 'sound' : 'sound'} size='20' color='#fff'></AtIcon>
-      音乐
-    </AtFab>
+    <XlAtfab
+      classNames='xl-home-atfab-vudio xl-home-atfab-context'
+      name='音乐'
+      icon={!isOpenMusic ? 'sound' : 'pause'}
+      fabClick={setOpenMusic} />
   )
 }
 

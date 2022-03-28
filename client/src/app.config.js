@@ -4,6 +4,7 @@ export default {
     'pages/home/index',
     'pages/album/index',
     'pages/comments/index',
+    'pages/map/index'
   ],
   "permission": {
     "scope.userLocation": {
@@ -19,15 +20,27 @@ export default {
   tabBar: {
     list: [{
       pagePath: 'pages/home/index',
-      text: '首页'
+      text: '邀请',
+      iconPath: 'image/tab/invite.png',
+      selectedIconPath: 'image/tab/invite-active.png'
+    },
+    {
+      pagePath: 'pages/map/index',
+      text: '导航',
+      iconPath: 'image/tab/location.png',
+      selectedIconPath: 'image/tab/location-active.png'
     },
     {
       pagePath: 'pages/album/index',
-      text: '相册'
+      text: '相册',
+      iconPath: 'image/tab/photo.png',
+      selectedIconPath: 'image/tab/photo-active.png'
     },
      {
       pagePath: 'pages/comments/index',
-      text: '祝福'
+      text: '祝福',
+      iconPath: 'image/tab/msg.png',
+      selectedIconPath: 'image/tab/msg-active.png'
     }]
   },
   subpackages: [

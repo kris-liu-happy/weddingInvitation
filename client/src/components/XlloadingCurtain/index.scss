@@ -1,0 +1,18 @@
+@import "~taro-ui/dist/style/components/modal.scss";
+@import "~taro-ui/dist/style/components/curtain.scss";
+
+.at-curtain {
+  background-color: #fff;
+}
+
+.xl-image-default-pic {
+  width: 100%;
+  height: 100%;
+}
+
+.xl-loading-default {
+  height: 100vh;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}

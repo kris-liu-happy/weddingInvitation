@@ -1,4 +1,4 @@
-import Firework from '../../components/fireworks/index.jsx'
+import Firework from '../../components/XlFireworks/index.jsx'
 import { View } from '@tarojs/components'
 import './index.scss'
 

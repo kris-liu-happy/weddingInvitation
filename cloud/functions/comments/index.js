@@ -11,7 +11,7 @@ async function main (event, context) {
   const db = cloud.database()
   
   const { func, data } = event
-  let res
+  let res = {}
   if (func === 'getAllComments') {
     res = await getAllComments(db)
   } else if (func === 'addComment') {
@@ -20,9 +20,7 @@ async function main (event, context) {
     res = await getLatestComments(db, data)
   }
 
-  return {
-    data: res
-  }
+  return res
 }
 
 exports.main = main

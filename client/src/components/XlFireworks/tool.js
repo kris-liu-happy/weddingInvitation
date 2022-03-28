@@ -70,20 +70,18 @@ function loop() {
 
 	var existingRockets = [];
 
-  context.font = 'bold 25px Arial';
-  context.textAlign = 'left';
-  context.textBaseline = 'bottom';
-  context.fillStyle = 'red';
-  context.strokeText("", 150, 100);
-  context.fillText("领奖台", 100, 100);
+  context.textAlign = 'center';
+  context.font = 'bold 18px Arial';
+  context.fillStyle = '#ff4c91';
   if (winning === 0) {
-    context.fillText("开奖时间：6月1号", 100, 150);
-    context.fillText("暂未开奖,请耐心等候", 100, 200);
+    context.fillText("暂未开奖,请耐心等候", SCREEN_WIDTH/2, 200);
+    context.fillText("开奖时间：6月1号", SCREEN_WIDTH/2, 250);
+
   } else if(winning> 0 && winning < 6) {
-    context.fillText("你中奖啦", 100, 140);
-    context.fillText(`${winning}等奖`, 100, 200);
+    context.fillText("恭喜你，中奖啦", SCREEN_WIDTH/2, 200);
+    context.fillText(`${winning}等奖`, SCREEN_WIDTH/2, 250);
   } else {
-    context.fillText("很遗憾你未中奖", 100, 200);
+    context.fillText("很遗憾您未中奖", SCREEN_WIDTH/2, 250);
   }
 
 

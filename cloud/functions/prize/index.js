@@ -13,9 +13,8 @@ async function main (event, context) {
     openId: wxContext.OPENID // 填入当前用户 openid
   }).get()).data
 
-  console.log(currentUser)
-
   return {
+    code: 200,
     data: currentUser[0].prize || 0
   }
 

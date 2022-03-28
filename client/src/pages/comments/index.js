@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View, ScrollView, Text, Button, CoverView } from '@tarojs/components'
-import { AtCurtain, AtAvatar, AtTextarea, AtFab, AtIcon, AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui"
+import { View, ScrollView, Text, Button, Image } from '@tarojs/components'
+import { AtTextarea, AtModal, AtModalHeader, AtModalContent, AtModalAction } from "taro-ui"
 import './index.scss'
 import { timestampToTime } from '../../utils/date'
+
+import xlRequest from '../../utils/request'
+import XlloadingCurtain from '../../components/XlloadingCurtain'
+import XlAtfab from '../../components/XlAtfab/index.jsx'
 
 const getRandomColor = () => {
   const color = ['red', 'rgb(0, 255, 0)', '#0000FF', '#fff']
@@ -105,14 +109,17 @@ export default class comments extends Component {
         loadingState: 0
       }, async () => {
         try {
-          const { result } = await Taro.cloud.callFunction({
-            name: "comments",
-            data: {
+
+            const list = await xlRequest('comments', {
               func: 'getAllComments'
-            }
-          })
-          if (result.data.code === 200) {
-            let list = result?.data?.data || []
+            })
+          // const { result } = await Taro.cloud.callFunction({
+          //   name: "comments",
+          //   data: {
+          //     func: 'getAllComments'
+          //   }
+          // })
+            // let list = data || []
             const uuid = 'item_' + new Date().getTime()
             if (list.length)  list[list.length - 1].uuid = uuid
             this.setState({
@@ -122,7 +129,6 @@ export default class comments extends Component {
             }, () => {
               this.barrage ? this.updateBarrage() : this.addBarrage()
             })
-          }
         } catch (error) {
           console.log(error)
         }
@@ -186,17 +192,8 @@ export default class comments extends Component {
     const {list, isOpenedModal, commentVal, loadingState, lastIndex, btnLoadding} = this.state
     return (
       <View className='xl-comments-content'>
-        <AtCurtain
-          isOpened={loadingState === 0 || loadingState === 2}
-        >
-          {
-            loadingState === 0 && <View className='xl-comments-modal'>加载中...</View>
-          }
 
-          {
-            loadingState === 2 && <View className='xl-comments-modal'>更新中...</View>
-          }
-        </AtCurtain>
+        <XlloadingCurtain isOpened={loadingState === 0 || loadingState === 2}/>
 
         <View className='xl-comments-barrage'>
           <barrage id="barrage" className="barrage" renderingMode="dom" zIndex="100" />
@@ -214,23 +211,20 @@ export default class comments extends Component {
             {
               list.map(item => {
                 return (
-                  <View id={item?.uuid || ''} className="xl-comments-scrollview-content">
-
-                    <View className="xl-comments-scrollview-AtAvatar">
-                      <AtAvatar size="small" image={item.avatarUrl}></AtAvatar>
+                  <View id={item?.uuid || ''}  className='msg-item' key={Math.random() * Math.random()}>
+                    <View className='msg-item__user-avatar'>
+                        <Image className='msg-item__user-avatar-img' src={item.avatarUrl} />
                     </View>
-                    <View className="xl-comments-scrollview-information">
-                      <View className='xl-comments-scrollview-information-show'>
-                        <View className="'xl-comments-scrollview-information-text">
-                          <Text>{item.nickName}</Text>
+                    <View className='msg-item__desc'>
+                        <View className='msg-item__user-info'>
+                            <View className='msg-item__user-name'>
+                                {item.nickName}
+                            </View>
+                            <View className='msg-item__msg-time'>
+                                {timestampToTime(item.createdTime)}
+                            </View>
                         </View>
-                        <View className='xl-comments-scrollview-createdTime'>
-                          <Text>{timestampToTime(item.createdTime)}</Text>
-                        </View>
-                      </View>
-                      <View className="xl-comments-scrollview-comment">
-                        <Text>{item.comment}</Text>
-                      </View>
+                        <View className='msg-item__msg-text'>{item.comment}</View>
                     </View>
                   </View>
                 )
@@ -238,10 +232,12 @@ export default class comments extends Component {
             }
           </ScrollView>
         }
-        <AtFab className='xl-comment-atfab-context' onClick={this.addComment.bind(this)}>
-          <AtIcon value='add' size='20' color='#fff'></AtIcon>
-          祝福
-        </AtFab>
+
+        <XlAtfab
+          classNames='xl-comment-atfab-context'
+          name='祝福'
+          icon='add'
+          fabClick={this.addComment.bind(this)} />
 
         <AtModal isOpened={isOpenedModal}>
           <AtModalHeader>祝福</AtModalHeader>

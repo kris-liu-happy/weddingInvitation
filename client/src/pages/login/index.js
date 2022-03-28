@@ -5,6 +5,7 @@ import { AtButton } from 'taro-ui'
 import './index.scss'
 
 import { setStorage } from '../../utils'
+import xlRequest from '../../utils/request'
 
 export default class Login extends Component {
 
@@ -27,21 +28,15 @@ export default class Login extends Component {
       this.setState({
         isLoginLoadding: true
       }, async () => {
-        const res = await Taro.cloud.callFunction({
-          name: "login",
-          data: {
-            userInfo: {
-              avatarUrl: userInfo.avatarUrl,
-              nickName: userInfo.nickName,
-              prize: 0
-            }
+        const data = await xlRequest("login", {
+          userInfo: {
+            avatarUrl: userInfo.avatarUrl,
+            nickName: userInfo.nickName,
+            prize: 0
           }
         })
-
-        if (res.result.code === 200) {
-          await setStorage('LXopenId', res.result.data.openId)
-          this.goToHome()
-        }
+        await setStorage('LXopenId', data.openId)
+        this.goToHome()
         this.setState({
           isLoginLoadding: false
         })

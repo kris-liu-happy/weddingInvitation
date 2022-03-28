@@ -1,5 +1,7 @@
-/client/node_modules/
-/cloud/functions/comments/node_modules/
-/cloud/functions/login/node_modules/
-/cloud/functions/prize/node_modules/
+dist/
+deploy_versions/
+.temp/
+.rn_temp/
+node_modules/
 .DS_Store
+

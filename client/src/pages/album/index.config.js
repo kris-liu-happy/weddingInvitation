@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '相册',
+  navigationBarTitleText: '甜蜜相册',
 }
