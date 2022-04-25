@@ -11,6 +11,7 @@
 .xl-home-swiper {
   width: 100vw;
   height: 30vh;
+  background-color: #ff4c9126;
 }
 
 .xl-home-atfab {
@@ -77,6 +78,14 @@
   position: fixed;
   bottom: 0;
   left: 0;
+}
+
+.xl-home-swiper-pic {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 

@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import Taro from '@tarojs/taro'
-import { View, Swiper, SwiperItem, Image, Button } from '@tarojs/components'
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction } from 'taro-ui'
+import { View, Image, Video } from '@tarojs/components'
 import { MyMusic } from '../../utils/context'
 
 import XlVedio from '../../components/XlVudio/vudio.jsx'
-
-import XlAtfab from '../../components/XlAtfab/index.jsx'
 
 import XlImage from '../../components/XlImage/index.jsx'
 
@@ -30,8 +27,6 @@ export default class Home extends Component {
   constructor() {
     super(...arguments)
     this.state = {
-      swiperImg: [],
-      isOpenedModal: false,
       inviteInformation: {},
       isloadingPage: true,
     }
@@ -39,27 +34,14 @@ export default class Home extends Component {
 
   componentDidMount() {
 
-    const requests = [xlRequest('photo', { func: 'getYearPhoto', data: { year: '2022' } }), xlRequest('information')]
+    const requests = [xlRequest('information')]
 
     Promise.all(requests).then(res => {
-      setStorage('information', res[1])
+      setStorage('information', res[0])
       this.setState({
-        swiperImg: res[0],
-        inviteInformation: res[1],
+        inviteInformation: res[0],
         isloadingPage: false
       })
-    })
-  }
-
-  gotoPrize() {
-    this.setState({
-      isOpenedModal: true,
-    })
-  }
-
-  colseModal(){
-    this.setState({
-      isOpenedModal: false
     })
   }
 
@@ -70,28 +52,21 @@ export default class Home extends Component {
   }
 
   render () {
-    const { isOpenedModal, swiperImg, isloadingPage, inviteInformation: invite} = this.state
-
+    const { isloadingPage, inviteInformation: invite } = this.state
     return (
       <View>
-        <Swiper
-          className='xl-home-swiper'
-          indicatorColor='#999'
-          indicatorActiveColor='#333'
-          circular
-          indicatorDots
-          interval='2000'
-          autoplay>
-            {
-              swiperImg.map(item => {
-                return(
-                  <SwiperItem>
-                      <XlImage imageClass={'xl-home-swiperitem-image'} isLazyLoading mode={'scaleToFill'} src={item.src}></XlImage>
-                  </SwiperItem>
-                )
-              })
-            }
-        </Swiper>
+        <View className="xl-home-swiper">
+          <Video
+              className="xl-home-swiper"
+              src={invite.video}
+              controls={true}
+              autoplay={true}
+              initialTime='0'
+              id='video'
+              loop={true}
+              muted={true}
+            />
+        </View>
 
         <View className='invite-info'>
             <Image className='invite-letter' src={inviteLetter} />
@@ -112,26 +87,7 @@ export default class Home extends Component {
 
         <View className='xl-home-atfab'>
           <XlVedio innerAudioContext={this.context} />
-          <XlAtfab
-            classNames='xl-home-atfab-navigation xl-home-atfab-context'
-            name='奖品'
-            icon='sketch'
-            fabClick={this.gotoPrize.bind(this)} />
         </View>
-
-        <AtModal isOpened={isOpenedModal}>
-          <AtModalHeader>游戏规则</AtModalHeader>
-          <AtModalContent>
-            <View className="xl-home-prize-rules">
-                6月1号随机在祝福评论里抽取5位幸运伙伴（领取大奖哦）
-            </View>
-            <View className="xl-home-prize-to">快去祝福区里留言吧!!!</View>
-            <View className="xl-home-prize-to">
-                是否前往领奖台？
-            </View>
-          </AtModalContent>
-          <AtModalAction> <Button onClick={this.colseModal.bind(this)}>否</Button> <Button onClick={this.handleConfirm.bind(this)}>是</Button> </AtModalAction>
-        </AtModal>
 
         <XlloadingCurtain isOpened={isloadingPage} />
       </View>

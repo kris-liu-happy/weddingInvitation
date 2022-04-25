@@ -47,7 +47,7 @@ export default class Album extends Component {
                   <View className="xl_album_size">
                     {item.id}·{item.title}
                   </View>
-                  <XlImage imageClass="xl_album_sigleImg" isLazyLoading src={item.src}></XlImage>
+                  <XlImage imageClass="xl_album_sigleImg" mode={'aspectFill'} isLazyLoading src={item.src}></XlImage>
                 </View>
               )
             })

@@ -83,6 +83,8 @@ export default class Login extends Component {
       longitude, latitude
     } } = this.state
 
+    console.log(longitude, latitude)
+
     Taro.getLocation({
       type: 'gcj02', //返回可以用于 Taro.openLocation的经纬度
       success: function (res) {
