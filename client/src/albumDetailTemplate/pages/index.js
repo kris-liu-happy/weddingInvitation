@@ -4,10 +4,20 @@ import XlImage from '../../components/XlImage'
 import Taro from '@tarojs/taro'
 import xlRequest from '../../utils/request'
 import XlloadingCurtain from '../../components/XlloadingCurtain'
+import { shareAppMessage } from '../../utils/share'
 
 import './index.scss'
 
 export default class albumDetailTemplate extends Component {
+
+  onShareAppMessage() {
+    return shareAppMessage()
+  }
+
+  onShareTimeline() {
+    return shareAppMessage()
+  }
+
 
   constructor () {
     super()

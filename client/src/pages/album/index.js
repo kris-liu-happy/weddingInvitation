@@ -5,10 +5,18 @@ import { setStorage } from '../../utils'
 import XlImage from '../../components/XlImage/index.jsx'
 import xlRequest from '../../utils/request'
 import XlloadingCurtain from '../../components/XlloadingCurtain'
-
+import { shareAppMessage } from '../../utils/share'
 import './index.scss'
 
 export default class Album extends Component {
+
+  onShareAppMessage() {
+    return shareAppMessage()
+  }
+
+  onShareTimeline() {
+    return shareAppMessage()
+  }
 
   constructor () {
     super()

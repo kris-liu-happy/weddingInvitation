@@ -21,8 +21,17 @@ const inviteTips = require('../../image/xl-home-invite-tips.png')
 
 const inviteLetter = require('../../image/xl-home-invite-letter.png')
 
+import { shareAppMessage } from '../../utils/share'
 
 export default class Home extends Component {
+
+  onShareAppMessage() {
+    return shareAppMessage()
+  }
+
+  onShareTimeline() {
+    return shareAppMessage()
+  }
   static contextType = MyMusic;
   constructor() {
     super(...arguments)

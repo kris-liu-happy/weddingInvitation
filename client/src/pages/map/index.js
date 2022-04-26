@@ -8,8 +8,17 @@ import XlAtfab from '../../components/XlAtfab/index.jsx'
 const callHe = require('../../image/xl-call-he.png')
 const callShe = require('../../image/xl-call-she.png')
 
+import { shareAppMessage } from '../../utils/share'
 
 export default class Login extends Component {
+
+  onShareAppMessage() {
+    return shareAppMessage()
+  }
+
+  onShareTimeline() {
+    return shareAppMessage()
+  }
 
   constructor () {
     super(...arguments)

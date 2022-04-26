@@ -8,6 +8,7 @@ import { timestampToTime } from '../../utils/date'
 import xlRequest from '../../utils/request'
 import XlloadingCurtain from '../../components/XlloadingCurtain'
 import XlAtfab from '../../components/XlAtfab/index.jsx'
+import { shareAppMessage } from '../../utils/share'
 
 const getRandomColor = () => {
   const color = ['red', 'rgb(0, 255, 0)', '#0000FF', '#fff']
@@ -18,6 +19,14 @@ const getRandomColor = () => {
 }
 
 export default class comments extends Component {
+
+  onShareAppMessage() {
+    return shareAppMessage()
+  }
+
+  onShareTimeline() {
+    return shareAppMessage()
+  }
 
   constructor() {
     super(...arguments)

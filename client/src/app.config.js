@@ -57,5 +57,7 @@ export default {
       ],
     }
   ],
+  enableShareAppMessage: true,
+  enableShareTimeline: true,
   cloud: true
 }

@@ -7,6 +7,8 @@ import './index.scss'
 import { setStorage } from '../../utils'
 import xlRequest from '../../utils/request'
 
+import { shareAppMessage } from '../../utils/share'
+
 const LoveOath = [
   '两姓联姻，一堂缔约',
   '良缘永结，匹配同称',
@@ -17,6 +19,14 @@ const LoveOath = [
 ]
 
 export default class Login extends Component {
+
+  onShareAppMessage() {
+    return shareAppMessage()
+  }
+
+  onShareTimeline() {
+    return shareAppMessage()
+  }
 
   constructor () {
     super(...arguments)
